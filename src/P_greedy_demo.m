@@ -3,7 +3,7 @@
 % Comments:
 % 	Collaborator: Yuji Saito, Keigo Yamada, Taku Nonomura
 %                 Kumi Nakai, Takayuki Nagata
-% 	Last modified: 2020/6/28
+% 	Last modified: 2020/7/16
 % Nomenclature:
 % - Scalars
 %   n : Number of degrees of freedom of spatial POD modes (state dimension)
@@ -76,11 +76,14 @@ if num_problem == 1
 
             %% Maximization of det - Convex--------------------------
             %!! This is very time consuming proceduce, We do not recommend to try this
-            % [time_convex(CNT,w+1), H_convex, sensors_convex] = F_sensor_convex(U,p,maxiteration);
+            % [time_convex(CNT,w+1), H_convex, sensors_convex, ...
+            %  NT_TOL_cal_convex(CNT,w+1), iter_convex(CNT,w+1)] ...
+            %  = F_sensor_convex(U,p,maxiteration);
             % [det_convex (CNT,w+1)] = F_calc_det  (p,H_convex,U);
             % [tr_convex  (CNT,w+1)] = F_calc_trace(p,H_convex,U);
             % [eig_convex (CNT,w+1)] = F_calc_eigen(p,H_convex,U);
-            %!! I recommend you use the following dummy values if you do not need the solution in the convex approximation in NOAA-SST.        
+            %!! I recommend you use the following dummy values
+            %!! if you do not need the solution in the convex approximation in NOAA-SST.        
             time_convex(CNT,w+1) = time_rand(CNT,w+1);
             det_convex (CNT,w+1) = det_rand (CNT,w+1);
             tr_convex  (CNT,w+1) = tr_rand  (CNT,w+1);
@@ -134,6 +137,9 @@ if num_problem == 1
         = F_data_ave1( CNT, num_ave, time_TG, det_TG, tr_TG, eig_TG );
         [ time_EG, det_EG, tr_EG, eig_EG ]...
         = F_data_ave1( CNT, num_ave, time_EG, det_EG, tr_EG, eig_EG );
+    
+        NT_TOL_cal_convex(CNT,1)=mean(NT_TOL_cal_convex(CNT,2:w+1));
+        iter_convex(CNT,w+1)=mean(iter_convex(CNT,2:w+1));
         
         %% Sensor location ==========================================
         sensor_memo = zeros(p,7);
@@ -190,11 +196,14 @@ if num_problem == 2
 
         %% Maximization of det - Convex------------------------------
         %!! This is very time consuming proceduce, We do not recommend to try this
-        % [time_convex(CNT,1), H_convex, sensors_convex] = F_sensor_convex(U,p,maxiteration);
+        % [time_convex(CNT,1), H_convex, sensors_convex, ...
+        %  NT_TOL_cal_convex(CNT,1), iter_convex(CNT,1)] ...
+        %  = F_sensor_convex(U,p,maxiteration);
         % [det_convex(CNT,1)] = F_calc_det(p,H_convex,U);
         % [tr_convex(CNT,1)]  = F_calc_trace(p,H_convex,U);
         % [eig_convex(CNT,1)] = F_calc_eigen(p,H_convex,U);
-        %!! I recommend you use the following dummy values if you do not need the solution in the convex approximation in NOAA-SST.        
+        %!! I recommend you use the following dummy values 
+        %!! if you do not need the solution in the convex approximation in NOAA-SST.
         time_convex(CNT,1) = time_rand(CNT,1);
         det_convex (CNT,1) = det_rand (CNT,1);
         tr_convex  (CNT,1) = tr_rand  (CNT,1);
@@ -346,6 +355,11 @@ if num_problem == 2
     save('Error.mat','Error');
     save('Error_rand.mat','Error_rand');
 end
+log_convex(1:CNT,1)=ps';
+log_convex(1:CNT,2)=NT_TOL_cal_convex(1:CNT,1);
+log_convex(1:CNT,3)=ter_convex(1:CNT,1);
+save('log_convex.mat','log_convex');
+
 warning('on','all')
 disp('Congratulations!');
 cd ../src

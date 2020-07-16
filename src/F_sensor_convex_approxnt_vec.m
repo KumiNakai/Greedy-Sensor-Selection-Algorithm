@@ -1,4 +1,4 @@
-function [zhat, L, ztilde, Utilde] = F_sensor_convex_approxnt_vec(A, k, maxiteration)
+function [zhat, L, ztilde, Utilde, NT_TOL_cal, iter] = F_sensor_convex_approxnt_vec(A, k, maxiteration)
     %% sens_sel_approxnt_vec
 %The original code was extended to vector-measurement by Tohoku University (Japan) Dec 2019.
 
@@ -35,12 +35,12 @@ for iter=1:MAXITER
 
     AdA=zeros(n,n);
     for ltmp=1:l
-       AdA=AdA+((A(:,:,ltmp))'*diag(z)*A(:,:,ltmp));
+        AdA=AdA+((A(:,:,ltmp))'*diag(z)*A(:,:,ltmp));
     end  
     W = inv(AdA);
     V=zeros(m,m);
     for ltmp=1:l
-       V = V + A(:,:,ltmp)*W*(A(:,:,ltmp))';   
+        V = V + A(:,:,ltmp)*W*(A(:,:,ltmp))';   
     end    
 
     g = -diag(V)- kappa*(1./z - 1./(1-z));
@@ -59,7 +59,7 @@ for iter=1:MAXITER
         zp = z + s*dz;
         AdA=zeros(n,n);
         for ltmp=1:l
-           AdA=AdA+((A(:,:,ltmp))'*diag(zp)*A(:,:,ltmp));
+            AdA=AdA+((A(:,:,ltmp))'*diag(zp)*A(:,:,ltmp));
         end
         fzp = -log(det(AdA)) - kappa*sum(log(zp) + log(1-zp));
 
@@ -69,13 +69,13 @@ for iter=1:MAXITER
         s = beta*s;
     end
     z = zp; fz = fzp;
-     
+    
     AdA=zeros(n,n);
     for ltmp=1:l
-       AdA=AdA+((A(:,:,ltmp))'*diag(z)*A(:,:,ltmp));        
+        AdA=AdA+((A(:,:,ltmp))'*diag(z)*A(:,:,ltmp));        
     end
-
-%    fprintf('%4d %10.3f %10.3f %10.3f %10.3f\n', iter, s, -g'*dz/2, -fz, log(det(AdA)));
+    fprintf('%4d %10.3f %10.3f %10.3f %10.3f\n', iter, s, -g'*dz/2, -fz, log(det(AdA)));
+    NT_TOL_cal=-g'*dz/2;
 
     if(-g'*dz/2 <= NT_TOL)
         break;
@@ -87,7 +87,7 @@ thres=zsort(m-k);
 zhat=(z>thres);
 AdA=zeros(n,n);
 for ltmp=1:l
-   AdA=AdA+((A(:,:,ltmp))'*diag(z)*A(:,:,ltmp));        
+    AdA=AdA+((A(:,:,ltmp))'*diag(z)*A(:,:,ltmp));        
 end
 L = log(det(AdA));
 ztilde = z; 
