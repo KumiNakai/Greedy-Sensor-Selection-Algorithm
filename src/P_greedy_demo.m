@@ -76,22 +76,22 @@ if num_problem == 1
 
             %% D-optimality - Convex---------------------------------
             %!! This is very time consuming proceduce, We do not recommend to try this
-            % [time_convex(CNT,w+1), H_convex, sensors_convex, ...
-            %  NT_TOL_cal_convex(CNT,w+1), iter_convex(CNT,w+1)] ...
-            %  = F_sensor_convex(U,p,maxiteration);
-            % det_convex (CNT,w+1) = F_calc_det  (p,H_convex,U);
-            % tr_convex  (CNT,w+1) = F_calc_trace(p,H_convex,U);
-            % eig_convex (CNT,w+1) = F_calc_eigen(p,H_convex,U);
+            % [time_DC(CNT,w+1), H_DC, sensors_DC, ...
+            %  NT_TOL_cal_DC(CNT,w+1), iter_DC(CNT,w+1)] ...
+            %  = F_sensor_DC(U,p,maxiteration);
+            % det_DC (CNT,w+1) = F_calc_det  (p,H_DC,U);
+            % tr_DC  (CNT,w+1) = F_calc_trace(p,H_DC,U);
+            % eig_DC (CNT,w+1) = F_calc_eigen(p,H_DC,U);
             %!! I recommend you use the following dummy values
             %   if you do not need the solution in the convex approximation in NOAA-SST.        
-            time_convex(CNT,w+1) = time_rand(CNT,w+1);
-            det_convex (CNT,w+1) = det_rand (CNT,w+1);
-            tr_convex  (CNT,w+1) = tr_rand  (CNT,w+1);
-            eig_convex (CNT,w+1) = eig_rand (CNT,w+1);
-            H_convex=H_rand;
-            sensors_convex=sensors_rand;
-            NT_TOL_cal_convex(CNT,w+1)=0;
-            iter_convex(CNT,w+1)=0;
+            time_DC(CNT,w+1) = time_rand(CNT,w+1);
+            det_DC (CNT,w+1) = det_rand (CNT,w+1);
+            tr_DC  (CNT,w+1) = tr_rand  (CNT,w+1);
+            eig_DC (CNT,w+1) = eig_rand (CNT,w+1);
+            H_DC=H_rand;
+            sensors_DC=sensors_rand;
+            NT_TOL_cal_DC(CNT,w+1)=0;
+            iter_DC(CNT,w+1)=0;
             
             %% Maximization of row norm - Greedy based on QR --------
             [time_QR(CNT,w+1), H_QR, sensors_QR] = F_sensor_QR(U,p);
@@ -127,8 +127,8 @@ if num_problem == 1
         %% Averaging ================================================
         [ time_rand, det_rand, tr_rand, eig_rand ]...
         = F_data_ave1( CNT, num_ave, time_rand, det_rand, tr_rand, eig_rand );
-        [ time_convex, det_convex, tr_convex, eig_convex ]...
-        = F_data_ave1( CNT, num_ave, time_convex, det_convex, tr_convex, eig_convex );
+        [ time_DC, det_DC, tr_DC, eig_DC ]...
+        = F_data_ave1( CNT, num_ave, time_DC, det_DC, tr_DC, eig_DC );
         [ time_QR, det_QR, tr_QR, eig_QR ]...
         = F_data_ave1( CNT, num_ave, time_QR, det_QR, tr_QR, eig_QR );
         [ time_DG, det_DG, tr_DG, eig_DG ]...
@@ -139,13 +139,13 @@ if num_problem == 1
         = F_data_ave1( CNT, num_ave, time_AG, det_AG, tr_AG, eig_AG );
         [ time_EG, det_EG, tr_EG, eig_EG ]...
         = F_data_ave1( CNT, num_ave, time_EG, det_EG, tr_EG, eig_EG );
-        NT_TOL_cal_convex(CNT,1)=mean(NT_TOL_cal_convex(CNT,2:w+1));
-        iter_convex(CNT,1)=mean(iter_convex(CNT,2:w+1));
+        NT_TOL_cal_DC(CNT,1)=mean(NT_TOL_cal_DC(CNT,2:w+1));
+        iter_DC(CNT,1)=mean(iter_DC(CNT,2:w+1));
         
         %% Sensor location ==========================================
         sensor_memo = zeros(p,7);
         sensor_memo(1:p,1) = sensors_rand(1:p)';
-        sensor_memo(1:p,2) = sensors_convex(1:p);
+        sensor_memo(1:p,2) = sensors_DC(1:p);
         sensor_memo(1:p,3) = sensors_QR(1:p)';
         sensor_memo(1:p,4) = sensors_DG(1:p);
         sensor_memo(1:p,5) = sensors_QD(1:p)';
@@ -197,27 +197,27 @@ if num_problem == 2
 
         %% D-optimality - Convex-------------------------------------
         %!! This is very time consuming proceduce, We do not recommend to try this
-        % [time_convex(CNT,1), H_convex, sensors_convex, ...
-        %  NT_TOL_cal_convex(CNT,1), iter_convex(CNT,1)] ...
-        %  = F_sensor_convex(U,p,maxiteration);
-        % det_convex(CNT,1) = F_calc_det(p,H_convex,U);
-        % tr_convex(CNT,1)  = F_calc_trace(p,H_convex,U);
-        % eig_convex(CNT,1) = F_calc_eigen(p,H_convex,U);
+        % [time_DC(CNT,1), H_DC, sensors_DC, ...
+        %  NT_TOL_cal_DC(CNT,1), iter_DC(CNT,1)] ...
+        %  = F_sensor_DC(U,p,maxiteration);
+        % det_DC(CNT,1) = F_calc_det(p,H_DC,U);
+        % tr_DC(CNT,1)  = F_calc_trace(p,H_DC,U);
+        % eig_DC(CNT,1) = F_calc_eigen(p,H_DC,U);
         %!! I recommend you use the following dummy values 
         %   if you do not need the solution in the convex approximation in NOAA-SST.
-        time_convex(CNT,1) = time_rand(CNT,1);
-        det_convex (CNT,1) = det_rand (CNT,1);
-        tr_convex  (CNT,1) = tr_rand  (CNT,1);
-        eig_convex (CNT,1) = eig_rand (CNT,1);
-        H_convex=H_rand;
-        sensors_convex=sensors_rand;
-        NT_TOL_cal_convex(CNT,w+1)=0;
-        iter_convex(CNT,w+1)=0;
+        time_DC(CNT,1) = time_rand(CNT,1);
+        det_DC (CNT,1) = det_rand (CNT,1);
+        tr_DC  (CNT,1) = tr_rand  (CNT,1);
+        eig_DC (CNT,1) = eig_rand (CNT,1);
+        H_DC=H_rand;
+        sensors_DC=sensors_rand;
+        NT_TOL_cal_DC(CNT,w+1)=0;
+        iter_DC(CNT,w+1)=0;
         %!!
-        [Zestimate_convex, Error_convex(CNT,1), Error_std_convex(CNT,1)] ...
-        = F_calc_error(m, Xorg, U, H_convex);
-        NT_TOL_cal_convex(CNT,1)=mean(NT_TOL_cal_convex(CNT,2:w+1));
-        iter_convex(CNT,1)=mean(iter_convex(CNT,2:w+1));
+        [Zestimate_DC, Error_DC(CNT,1), Error_std_DC(CNT,1)] ...
+        = F_calc_error(m, Xorg, U, H_DC);
+        NT_TOL_cal_DC(CNT,1)=mean(NT_TOL_cal_DC(CNT,2:w+1));
+        iter_DC(CNT,1)=mean(iter_DC(CNT,2:w+1));
         
         %% Maximization of row norm - Greedy based on QR ------------
         [time_QR(CNT,1), H_QR, sensors_QR] = F_sensor_QR(U,p);
@@ -262,7 +262,7 @@ if num_problem == 2
         %% Sensor location ==========================================
         sensor_memo = zeros(p,7);
         sensor_memo(1:p,1) = sensors_rand(1:p)';
-        sensor_memo(1:p,2) = sensors_convex(1:p);
+        sensor_memo(1:p,2) = sensors_DC(1:p);
         sensor_memo(1:p,3) = sensors_QR(1:p)';
         sensor_memo(1:p,4) = sensors_DG(1:p);
         sensor_memo(1:p,5) = sensors_QD(1:p)';
@@ -275,9 +275,9 @@ if num_problem == 2
         name='rand';
         F_map_reconst(r, num_video, Xorg, meansst, U, mask, time, p, ...
                         sensors_rand, Zestimate_rand, name, videodir, sensordir)
-        name='convex';
+        name='DC';
         F_map_reconst(r, num_video, Xorg, meansst, U, mask, time, p, ...
-                        sensors_convex, Zestimate_convex, name, videodir, sensordir)
+                        sensors_DC, Zestimate_DC, name, videodir, sensordir)
         name='QR';
         F_map_reconst(r, num_video, Xorg, meansst, U, mask, time, p, ...
                         sensors_QR, Zestimate_QR, name, videodir, sensordir)
@@ -301,34 +301,34 @@ end
 
 %% Data organization ================================================
 % Arrange
-[time_all] = F_data_arrange1( ps,   CNT, time_rand, time_convex, time_QR,...
+[time_all] = F_data_arrange1( ps,   CNT, time_rand, time_DC, time_QR,...
                               time_DG,   time_QD,   time_AG,     time_EG );
-[det_all]  = F_data_arrange1( ps,   CNT, det_rand,  det_convex,  det_QR, ...
+[det_all]  = F_data_arrange1( ps,   CNT, det_rand,  det_DC,  det_QR, ...
                               det_DG,    det_QD,    det_AG,      det_EG  );
-[tr_all]   = F_data_arrange1( ps,   CNT, tr_rand,   tr_convex,   tr_QR,...
+[tr_all]   = F_data_arrange1( ps,   CNT, tr_rand,   tr_DC,   tr_QR,...
                               tr_DG,     tr_QD,     tr_AG,       tr_EG   );
-[eig_all]  = F_data_arrange1( ps,   CNT, eig_rand,  eig_convex,  eig_QR,...
+[eig_all]  = F_data_arrange1( ps,   CNT, eig_rand,  eig_DC,  eig_QR,...
                               eig_DG,    eig_QD,    eig_AG,      eig_EG  );
 if num_problem == 2
-    [Error] = F_data_arrange2( ps,   CNT, ...
-                               Error_rand,   Error_std_rand,  ...
-                               Error_convex, Error_std_convex,... 
-                               Error_QR,     Error_std_QR,    ...
-                               Error_DG,     Error_std_DG,    ...
-                               Error_QD,     Error_std_QD,    ...
-                               Error_AG,     Error_std_AG,    ...
-                               Error_EG,     Error_std_EG,    ...
+    [Error] = F_data_arrange2( ps,         CNT, ...
+                               Error_rand, Error_std_rand, ...
+                               Error_DC,   Error_std_DC,   ... 
+                               Error_QR,   Error_std_QR,   ...
+                               Error_DG,   Error_std_DG,   ...
+                               Error_QD,   Error_std_QD,   ...
+                               Error_AG,   Error_std_AG,   ...
+                               Error_EG,   Error_std_EG,   ...
                                Error_ave_pod );
 end
-[log_convex] = F_data_arrange3( ps, CNT, NT_TOL_cal_convex, iter_convex );
+[log_DC] = F_data_arrange3( ps, CNT, NT_TOL_cal_DC, iter_DC );
 
 % Normalize
-[Normalized_det] = F_data_normalize( ps, CNT, det_rand, det_convex, det_QR, ...
-                                     det_DG,  det_QD,   det_AG,     det_EG );
-[Normalized_tr]  = F_data_normalize( ps, CNT, tr_rand,  tr_convex,  tr_QR,  ...
-                                     tr_DG,   tr_QD,    tr_AG,      tr_EG  );
-[Normalized_eig] = F_data_normalize( ps, CNT, eig_rand, eig_convex, eig_QR, ...
-                                     eig_DG,  eig_QD,   eig_AG,     eig_EG );
+[Normalized_det] = F_data_normalize( ps, CNT, det_rand, det_DC, det_QR, ...
+                                     det_DG,  det_QD,   det_AG, det_EG );
+[Normalized_tr]  = F_data_normalize( ps, CNT, tr_rand,  tr_DC,  tr_QR,  ...
+                                     tr_DG,   tr_QD,    tr_AG,  tr_EG  );
+[Normalized_eig] = F_data_normalize( ps, CNT, eig_rand, eig_DC, eig_QR, ...
+                                     eig_DG,  eig_QD,   eig_AG, eig_EG );
 
 %% Save =============================================================
 cd(workdir)
@@ -344,13 +344,13 @@ save('det_rand.mat','det_rand');
 save('trace_rand.mat','tr_rand');
 save('eigen_rand.mat','eig_rand');
 if num_problem == 1
-    save('time_convex.mat','time_convex');
+    save('time_DC.mat','time_DC');
     save('time_QR.mat','time_QR');
     save('time_DG.mat','time_DG');
     save('time_QD.mat','time_QD');
     save('time_AG.mat','time_AG');
     save('time_EG.mat','time_EG');
-    save('det_convex.mat','det_convex');
+    save('det_DC.mat','det_DC');
     save('det_QR.mat','det_QR');
     save('det_DG.mat','det_DG');
     save('det_QD.mat','det_QD');
@@ -361,7 +361,7 @@ if num_problem == 2
     save('Error.mat','Error');
     save('Error_rand.mat','Error_rand');
 end
-save('log_convex.mat','log_convex');
+save('log_DC.mat','log_DC');
 
 warning('on','all')
 disp('Congratulations!');
