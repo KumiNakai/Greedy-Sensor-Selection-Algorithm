@@ -27,12 +27,12 @@ Due to GitHub file size limitations, a dataset is linked online: [NOAA Optimum I
 
 #### Sensor selection  
 - F_sensor_random.m  
-- F_sensor_convex.m  
-  - F_sensor_convex_sub.m  
-    - F_sensor_convex_approxnt_vec.m  
-    - F_sensor_convex_approxnt.m  
-    - F_sensor_convex_loc.m  
-    - F_sensor_convex_locr.m  
+- F_sensor_DC.m  
+  - F_sensor_DC_sub.m  
+    - F_sensor_DC_approxnt_vec.m  
+    - F_sensor_DC_approxnt.m  
+    - F_sensor_DC_loc.m  
+    - F_sensor_DC_locr.m  
 - F_sensor_QR.m  
   - F_sensor_QR_pivot.m  
 - F_sensor_DG.m  
