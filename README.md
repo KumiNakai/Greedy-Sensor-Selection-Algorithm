@@ -6,9 +6,9 @@ To run the program, excute `P_greedy_demo`.
 
 ## Directory  
 ---
-- src：source code is stored  
-- work：calculation results are stored (created automatically by running the program)  
-- data：__NOAA Optimum Interpolation (OI) Sea Surface Temperature (SST) V2__ data is stored  
+- src: source code is stored  
+- work: calculation results are stored (created automatically by running the program)  
+- data: __NOAA Optimum Interpolation (OI) Sea Surface Temperature (SST) V2__ data is stored  
   - sst.wkmean.1990-present.nc  
   - lsmask.nc  
 NOAA_OI_SST_V2 is provided by the NOAA/OAR/ESRL PSD, Boulder, Colorado, USA, from their Web site at https://www.esrl.noaa.gov/psd/.  
@@ -39,8 +39,8 @@ Due to GitHub file size limitations, a dataset is linked online: [NOAA Optimum I
   - F_sensor_DG_r.m  
   - F_sensor_DG_p.m  
 - F_sensor_QD.m  
-- F_sensor_TG.m  
-  - F_sensor_TG_calc_trace.m  
+- F_sensor_AG.m  
+  - F_sensor_AG_calc_trace.m  
 - F_sensor_EG.m  
   - F_sensor_EG_calc_eigen.m  
 
@@ -58,6 +58,7 @@ Due to GitHub file size limitations, a dataset is linked online: [NOAA Optimum I
 - F_data_ave2.m  
 - F_data_arrange1.m  
 - F_data_arrange2.m  
+- F_data_arrange3.m  
 - F_data_normalize.m  
 
 #### Mapping
