@@ -74,7 +74,7 @@ for iter=1:MAXITER
     for ltmp=1:l
         AdA=AdA+((A(:,:,ltmp))'*diag(z)*A(:,:,ltmp));        
     end
-    fprintf('%4d %10.3f %10.3f %10.3f %10.3f\n', iter, s, -g'*dz/2, -fz, log(det(AdA)));
+    % fprintf('%4d %10.3f %10.3f %10.3f %10.3f\n', iter, s, -g'*dz/2, -fz, log(det(AdA)));
     NT_TOL_cal=-g'*dz/2;
 
     if(-g'*dz/2 <= NT_TOL)
