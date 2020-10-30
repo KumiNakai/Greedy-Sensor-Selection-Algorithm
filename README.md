@@ -1,4 +1,4 @@
-# Greedy-Sensor-Selection-Algorithm
+# Greedy Sensor Selection Algorithm  
 ---
 This repository contains Matlab R2013a code to reproduce results for a manuscript entitled __"Effect of Objective Function on Data-Driven Sparse Sensor Optimization"__ published in [arXiv](https://arxiv.org/abs/2007.05377).  
 The sparse sensor selection problem is solved by the greedy method.  
@@ -67,6 +67,50 @@ Due to GitHub file size limitations, a dataset is linked online: [NOAA Optimum I
 		- F_map_plot_sensors_forvideo.m  
 - F_map_reconst.m  
 	- F_map_plot_sensors.m  
+
+### Function  
+#### Preprocessing  
+- F_pre_read_NOAA_SST.m  
+- F_pre_SVD_NOAA_SST.m  
+- F_pre_truncatedSVD.m  
+
+## How to cite  
+---
+If you use `Greedy Sensor Selection Algorithm` code in your work, please cite the software itself and relevent papers.  
+### General software reference:  
+``` bibtex
+@misc{nakai2020github,
+      author = {Kumi Nakai},
+      title = {Greedy Sensor Selection Algorithm },
+      howpublished = {Available online},
+      year = {2020},
+      url = {https://github.com/KumiNakai/Greedy-Sensor-Selection-Algorithm}
+}
+```  
+
+### Greedy algorithm based on D-optimality:  
+``` bibtex
+@misc{saito2020determinantbased,
+      title={Determinant-based Fast Greedy Sensor Selection Algorithm}, 
+      author={Yuji Saito and Taku Nonomura and Keigo Yamada and Keisuke Asai and Yasuo Sasaki and Daisuke Tsubakino},
+      year={2020},
+      eprint={1911.08757},
+      archivePrefix={arXiv},
+      primaryClass={eess.SP}
+}
+```
+
+### Greedy algorithm based on A-and E-optimality:  
+``` bibtex
+@misc{nakai2020effect,
+      title={Effect of Objective Function on Data-Driven Sparse Sensor Optimization}, 
+      author={Kumi Nakai and Keigo Yamada and Takayuki Nagata and Yuji Saito and Taku Nonomura},
+      year={2020},
+      eprint={2007.05377},
+      archivePrefix={arXiv},
+      primaryClass={eess.SP}
+}
+```
 
 ## License  
 ---
