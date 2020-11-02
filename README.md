@@ -81,7 +81,7 @@ If you use `Greedy Sensor Selection Algorithm` code in your work, please cite th
 ``` bibtex
 @misc{nakai2020github,
       author = {Kumi Nakai},
-      title = {Greedy Sensor Selection Algorithm },
+      title = {Greedy Sensor Selection Algorithm},
       howpublished = {Available online},
       year = {2020},
       url = {https://github.com/KumiNakai/Greedy-Sensor-Selection-Algorithm}
@@ -93,7 +93,7 @@ If you use `Greedy Sensor Selection Algorithm` code in your work, please cite th
 @misc{saito2020determinantbased,
       title={Determinant-based Fast Greedy Sensor Selection Algorithm}, 
       author={Yuji Saito and Taku Nonomura and Keigo Yamada and Keisuke Asai and Yasuo Sasaki and Daisuke Tsubakino},
-      year={2020},
+      year={2019},
       eprint={1911.08757},
       archivePrefix={arXiv},
       primaryClass={eess.SP}
